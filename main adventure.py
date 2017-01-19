@@ -38,6 +38,14 @@ def light(lit):
     else:
         print('flashlight error')
 
+def check_water(water):
+    print("Your water bottle. It's made of a light metal, maybe aluminum.")
+    if water == "full":
+        print(bottle.desc_full)
+    if water == "half":
+        print(bottle.desc_half_full)
+    if water == "empty":
+        print(bottle.desc_empty)
       
 room1=room('entrance', 0, 0)
 room1.desc_dark = ('You find yourself in a dimly lit room. You can make out a closed door, where light is ' +
@@ -59,21 +67,40 @@ flashlight.desc = ("It's a flashlight. It's bright yellow color and the light is
                        " to make out your surroundings.")
 flashlight.state = 0
 
+backpack = item("backpack")
+backpack.desc = ("Your handy backpack. You brought it when you went hiking. It's a lot dirtier now than it was then.")
+
+bottle = item("water bottle")
+bottle.water = "full"
+bottle.desc = check_water(bottle.water)
+bottle.desc_full =  "It's full to the brim, and a little heavy to carry."
+bottle.desc_half_full = "It's half-full, and lighter than it was."
+bottle.desc_empty = ("It's dry. There's a couple droplets left, but they're resolutely clinging to the bottom.")
+
 location = room1
 door1=0
 #Boolean, door starts closed
-inventory=[flashlight]
+inventory=[backpack, flashlight, bottle, ]
 
 actions=['location', 'look', 'inventory', 'light', 'use flashlight', 'light flashlight', 'leave', 'exit', 'forward', 'flashlight',
-         'Flashlight', "inspect flashlight", "enter"]
+         'Flashlight', "inspect flashlight", "enter", "drink", "drink water", "use water"]
 def delete(list, x):
     if x in list:
         x=[]
 #needs to be dictionary, not list. will fix when i have time to figure it out
 
-
-
+#intro starts here 
 print(room1.desc_dark)
+print("You can't remember how you got here. The last thing you remember is hiking with your dog, Fido, in . . . ")
+sleep(3)
+print("Where were you hiking? God, your head hurts. Maybe a glass of water would do you good. You reach into your backpack.\n" +
+      "It's beaten up, not worn but as if it had been left in mud and marched on. What in the world happened?\n" +
+      "You get out your water bottle. The water inside is lukewarm, but it's better than nothing. \n" +
+      "(hint: type 'backpack' or 'inventory' to check what's inside your backpack.) \n" +
+      "Where's Fido? Hopefully he wasn't killed in the avalanche - an avalanche! \n" + 
+      "You remember now. You were hiking in Alaska, near Anchorage, when there was an avalanche, " +
+      "throwing you off the path and into the air. \nYou need to find Fido and get out of here, wherever 'here' is."
+      
 while True:
     actions.append('open door')
     actions.append('open')
@@ -86,9 +113,10 @@ while True:
             print(location.name)    
         elif command == 'look':
             look(flashlight.state)
-        elif command =='inventory':
-            for x in inventory:
-                print(x.name)
+        for x in ['backpack', 'inventory', 'bookbag', 'bag']
+            if command == x:
+                for y in inventory:
+                    print(y.name)
         for x in ['light', 'use flashlight', 'light flashlight', "turn on", "turn on light"]:
             if command == x:
                 flashlight.state = light(flashlight.state) 
@@ -110,11 +138,22 @@ while True:
         for x in inventory:
             if (command == x.name) or (command == "inspect " + x.name):
                 print(x.desc)
+        for x in ["drink", "drink water", "use water"]:
+            if bottle.water == "full":
+                bottle.water = "half"
+                print("You drink half the water in your bottle.")
+ 
+            if bottle.water == "half":
+                bottle.water = "empty"
+                print("You drink the remaining half of your water. It's empty now.")
+      
+            if bottle.water == "empty":
+                print(bottle.desc_empty)
+      
         if command not in actions:
             print("Sorry, I don't recognize that word.")
         
     delete(actions, 'open door')
     delete(actions, 'open')
     print('Out of content. I guess that counts as beating the game?')
-    while location == corridor1:
-        command = input ('>>')
+exit
