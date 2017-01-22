@@ -199,7 +199,8 @@ while game_finish == 0:
             for y in inventory:
                 print(y.name)
                 check_action += 1
-    for x in ['light', 'use flashlight', 'light flashlight', "turn on", "turn on light", 'flashlight on']:
+    for x in ['light', 'use flashlight', 'light flashlight', "turn on", "turn on light", 'flashlight on',
+              'turn on flashlight', 'turn flashlight on']:
         if command == x:
             flashlight.state = light(flashlight.state) 
             check_action += 1
