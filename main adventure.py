@@ -44,8 +44,8 @@ def inspect(x):
     if x in inventory:
         print(x.desc)
     else:
-        print("You can only inspect objects in inventory. Try looking intead.")
-
+        print("You can't inspect things that aren't in your backpack. Try looking instead.")
+        
 room1=room('entrance', 0, 0)
 room1.desc_dark = ('You find yourself in a dimly lit room. You can make out a closed door, where light is ' +
                        'creeping through.')
@@ -105,20 +105,20 @@ while (command != 'yes') and (command != 'no'):
     
 if command == 'yes':
     print(room1.desc_dark)
-    print("You can't remember how you got here. The last thing you remember is hiking with your dog,"
+    print("You can't remember how you got here. The last thing you remember is hiking with your dog, "
           + "Fido, in . . . ")
     sleep(5)
     print("Where were you hiking? God, your head hurts. Maybe a glass of water would do you good. \n" +
           "You reach into your backpack.")
     sleep(2)
-    print("It's beaten up, not worn but as if it had been left in mud and marched on. What in the world" +
+    print("It's beaten up, not worn but as if it had been left in mud and marched on. What in the world " +
           "happened?")
     sleep(2)
-    print("You get out your water bottle. The water inside is lukewarm, but it's better than nothing.")
+    print("You get out your water bottle. The water inside is lukewarm, but it's better than nothing. ")
     sleep(2)
     print("(hint: type 'backpack' or 'inventory' to check what's inside your backpack.)")
     sleep(2)
-    print("Where's Fido? Hopefully he wasn't killed in the avalanche - an avalanche!")
+    print("Where's Fido? Hopefully he wasn't killed in the avalanche - an avalanche! ")
     sleep(5)
     print("You remember now. You were hiking in Alaska, near Anchorage, when an avalanche, " +
           "threw you off the path and into the air. \nYou need to find Fido and get out of here, " +
