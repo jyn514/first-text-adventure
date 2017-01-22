@@ -44,7 +44,7 @@ def inspect(x):
     if x in inventory:
         print(x.desc)
     else:
-        print("You can't inspect things that aren't in your backpack. Try looking instead.")
+        print("You can only inspect objects in inventory. Try looking intead.")
 
 room1=room('entrance', 0, 0)
 room1.desc_dark = ('You find yourself in a dimly lit room. You can make out a closed door, where light is ' +
@@ -80,9 +80,11 @@ bottle.desc = ("Your water bottle. It's made of a light metal, maybe aluminum. "
 
 key = item("old key")
 key.desc = "An old iron key, worn by time. Perhaps you'll find a use for it later."
+key.alt_name = 'key'
 
 note = item("worn note")
 note.desc = "A hastily scribbled note. It says 'Key to door. Remember, lock turns right.'"
+note.alt_name = 'note'
 
 chest = item("wooden chest")
 chest.desc = "A hand-crafted chest that looks as if it's seen better days. It contains:"
@@ -103,13 +105,13 @@ while (command != 'yes') and (command != 'no'):
     
 if command == 'yes':
     print(room1.desc_dark)
-    print("You can't remember how you got here. The last thing you remember is hiking with your dog, "
+    print("You can't remember how you got here. The last thing you remember is hiking with your dog,"
           + "Fido, in . . . ")
     sleep(5)
     print("Where were you hiking? God, your head hurts. Maybe a glass of water would do you good. \n" +
           "You reach into your backpack.")
     sleep(2)
-    print("It's beaten up, not worn but as if it had been left in mud and marched on. What in the world " +
+    print("It's beaten up, not worn but as if it had been left in mud and marched on. What in the world" +
           "happened?")
     sleep(2)
     print("You get out your water bottle. The water inside is lukewarm, but it's better than nothing.")
@@ -141,14 +143,21 @@ while game_finish == 0:
                     print(x.name)
                 check_action += 1
         for x in chest.contents:
-            if (command == x.name) or (command == "inspect " + x.name) or (command == "look " + x.name):
-                print(x.desc)
-                check_action += 1
-            if (command == "take " + x.name):
+            for y in [x.name, "inspect " + x.name, "look " + x.name,
+                      x.alt_name, "inspect " + x.alt_name, "look " + x.alt_name]:
+                if command == y:
+                    print (x.desc)
+                    check_action += 1
+            if (command == "take " + x.name) or (command == "take " + x.alt_name):
                 inventory.append(x)
                 print("You take the " + x.name + ".")
                 check_action += 1
-                chest.contents.remove(x)        
+                try:
+                    chest.contents.remove(x)
+                except:
+                    print("It's not in the chest.")
+
+        
         for x in ['leave', 'exit', 'forward', 'enter', 'enter corridor', 'exit room']:
             if command==x:
                 check_action += 1
@@ -194,8 +203,7 @@ while game_finish == 0:
             for y in inventory:
                 print(y.name)
                 check_action += 1
-    for x in ['light', 'use flashlight', 'light flashlight', "turn on", "turn on light", 'flashlight on',
-              'turn on flashlight', 'turn flashlight on']:
+    for x in ['light', 'use flashlight', 'light flashlight', "turn on", "turn on light", 'flashlight on']:
         if command == x:
             flashlight.state = light(flashlight.state) 
             check_action += 1
@@ -220,3 +228,4 @@ while game_finish == 0:
 print('Out of content. I guess that counts as beating the game?')
 game_finish = 1
 raise SystemExit
+
