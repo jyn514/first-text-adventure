@@ -152,11 +152,7 @@ while game_finish == 0:
                 inventory.append(x)
                 print("You take the " + x.name + ".")
                 check_action += 1
-                try:
-                    chest.contents.remove(x)
-                except:
-                    print("It's not in the chest.")
-
+                chest.contents.remove(x)
         
         for x in ['leave', 'exit', 'forward', 'enter', 'enter corridor', 'exit room']:
             if command==x:
